@@ -6,7 +6,11 @@ let barChart, pieChart, donutChart, topChart;
 window.onload = loadGPList;
 
 function loadGPList() {
-    fetch("http://localhost:5000/gplist")
+   const API = "https://gp-election-backend.onrender.com";
+
+         fetch(`${API}/gplist`)
+         fetch(`${API}/search?gp=${gp}`)
+
         .then(res => res.json())
         .then(gps => {
             const list = document.getElementById("gpList");
