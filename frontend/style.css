@@ -1,0 +1,392 @@
+/* ================= BASE ================= */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+
+    background-image: url("https://www.uxdt.nic.in/wp-content/uploads/2020/06/Election-Commission_Preview.png");
+    background-size: cover;
+    background-position: left;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.hidden { display: none; }
+
+/* ================= LAYOUT ================= */
+.layout {
+    display: flex;
+    height: 100vh;
+}
+
+.container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(219, 229, 241, 0.92);
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    width: 260px;
+    background: #1e293b;
+    color: white;
+    padding: 15px;
+    overflow-y: auto;
+}
+
+.sidebar h3 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    border-bottom: 1px solid #475569;
+    padding-bottom: 8px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.sidebar li:hover { background: #334155; }
+.sidebar li.active { background: #475569; font-weight: bold; }
+
+/* ================= HEADER ================= */
+.top-header {
+    background: rgb(208, 225, 241);
+    height: 100px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.header-logos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.header-logos img { height: 80px; }
+
+/* ================= NAV ================= */
+.top-nav {
+    background: #0b74c9;
+    height: 52px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    padding-left: 20px;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.nav-menu a:hover {
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+}
+
+/* ================= SEARCH ================= */
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+/* =========================
+   FIX CHART SIZE (DESKTOP)
+========================= */
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+}
+
+.charts canvas {
+  width: 100% !important;
+  height: 260px !important;   /* 👈 controls size */
+  max-height: 260px !important;
+  transform: none;            /* remove extra 3D stretch */
+}
+/* ===== VALUE POPUP ===== */
+.value-popup {
+  position: fixed;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: bold;
+  z-index: 9999;
+  animation: popFade 0.6s ease forwards;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+@keyframes popFade {
+  from {
+    transform: translateY(10px) scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* =========================
+   MOBILE CHART FIX
+========================= */
+@media (max-width: 768px) {
+
+  .charts,
+  .charts.small {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  .charts canvas {
+    height: 220px !important;
+    max-height: 220px !important;
+  }
+}
+
+.search-box input {
+    padding: 10px;
+    width: 250px;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* ================= SUMMARY ================= */
+.summary {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+}
+
+.gp-title {
+    font-size: 28px;
+    color: #1e3a8a;
+}
+
+.highlight {
+    color: #15803d;
+    font-weight: bold;
+}
+
+.winner-banner {
+    margin-top: 14px;
+    padding: 12px;
+    background: linear-gradient(90deg, #dcfce7, #f0fdf4);
+    border-left: 6px solid #16a34a;
+}
+
+/* ================= PARTY BOX ================= */
+.party-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.party-box img {
+    width: 120px;
+}
+
+.party-box.brs { border-left: 6px solid #e11d48; }
+.party-box.congress { border-left: 6px solid #16a34a; }
+
+/* ================= CANDIDATES ================= */
+.candidate-title {
+    font-size: 24px;
+    margin-top: 30px;
+}
+
+.candidate-list {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;
+}
+
+.candidate-list li {
+    background: #e0f2fe;
+    padding: 16px;
+    margin-bottom: 10px;
+    border-left: 6px solid #0b74c9;
+}
+
+/* ================= CHARTS ================= */
+.charts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    width: 100%;
+    max-width: 1000px;
+}
+
+canvas {
+    background: white;
+    border-radius: 14px;
+    max-width: 100%;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    background: #1e293b;
+    color: #e5e7eb;
+}
+
+.footer span {
+    color: #38bdf8;
+    font-weight: bold;
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+
+    html, body { overflow-x: hidden; }
+
+    .layout {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        max-height: 240px;
+    }
+
+    .container {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .search-box {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .search-box input,
+    .search-box button {
+        width: 100%;
+    }
+
+    .charts {
+        grid-template-columns: 1fr;
+    }
+
+    canvas {
+        height: auto !important;
+        transform: none;
+    }
+
+    .candidate-list li {
+        font-size: 16px;
+    }
+
+    .header-logos {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  align-items: center;
+}
+
+.party-box {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.party-box img {
+  width: 100px;
+  margin-bottom: 8px;
+}
+
+.party-box div {
+  font-size: 17px;
+  font-weight: bold;
+}
+
+/* Party colors */
+.party-box.brs { border-left: 6px solid #e11d48; }
+.party-box.congress { border-left: 6px solid #16a34a; }
+
+/* Mobile */
+@media (max-width: 768px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.candidate-list li {
+  background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+  margin-bottom: 10px;
+  padding: 14px 18px;
+
+  font-size: 18px;
+  font-weight: 700;      /* ✅ BOLD */
+  color: #0f172a;
+
+  border-left: 6px solid #2563eb;
+  border-radius: 8px;
+
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+}
+
+/* Mobile – one chart per row */
+@media (max-width: 768px) {
+  .charts {
+    grid-template-columns: 1fr;
+  }
+
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+    transform: none;
+  }
+}
