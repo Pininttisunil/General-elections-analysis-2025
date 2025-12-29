@@ -6,6 +6,15 @@ from analysis import analyze_gp, get_unique_gram_panchayats
 
 app = Flask(__name__)
 CORS(app)
+@app.route("/")
+def home():
+    return {
+        "message": "Backend is running successfully",
+        "available_endpoints": [
+            "/gplist",
+            "/search?gp=Durgaram"
+        ]
+    }
 
 @app.route("/search", methods=["GET"])
 def search_gp():
