@@ -94,11 +94,11 @@ function searchGP() {
             panel.classList.remove("hidden", "brs", "congress");
 
             if (data.gp.toLowerCase() === "durgaram") {
-                logo.src = "images/brs.png";
+                logo.src = "brs.png";
                 text.innerHTML = "BRS Supported Candidate<br>🏆 WON";
                 panel.classList.add("brs");
             } else {
-                logo.src = "images/congress.png";
+                logo.src = "congress.png";
                 text.innerHTML = "Congress Supported Candidate<br>🏆 WON";
                 panel.classList.add("congress");
             }
