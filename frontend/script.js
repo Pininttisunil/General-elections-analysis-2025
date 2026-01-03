@@ -1,12 +1,17 @@
 let barChart, pieChart, donutChart, topChart;
 
 /* ==============================
+   BACKEND BASE URL (RENDER)
+================================ */
+const API_BASE = "https://general-elections-analysis-2025-4.onrender.com";
+
+/* ==============================
    LOAD GRAM PANCHAYAT LIST
 ================================ */
 window.onload = loadGPList;
 
 function loadGPList() {
-    fetch("http://localhost:5000/gplist")
+    fetch(`${API_BASE}/gplist`)
         .then(res => res.json())
         .then(gps => {
             const list = document.getElementById("gpList");
@@ -58,7 +63,7 @@ function searchGP() {
         return;
     }
 
-    fetch(`http://localhost:5000/search?gp=${gp}`)
+    fetch(`${API_BASE}/search?gp=${encodeURIComponent(gp)}`)
         .then(res => res.json())
         .then(data => {
             if (data.error) {
@@ -90,18 +95,18 @@ function searchGP() {
 
             if (data.gp.toLowerCase() === "durgaram") {
                 logo.src = "images/brs.png";
-                text.innerHTML = "BRS Supported Candidate<br> WON";
+                text.innerHTML = "BRS Supported Candidate<br>🏆 WON";
                 panel.classList.add("brs");
             } else {
                 logo.src = "images/congress.png";
-                text.innerHTML = "Congress Supported Candidate<br> WON";
+                text.innerHTML = "Congress Supported Candidate<br>🏆 WON";
                 panel.classList.add("congress");
             }
 
             renderCandidateList(data);
             renderCharts(data);
         })
-        .catch(() => alert("Server error. Check backend."));
+        .catch(() => alert("Backend server error"));
 }
 
 /* ==============================
@@ -153,7 +158,6 @@ function gradient(ctx, c1, c2) {
 function renderCharts(data) {
     const names = data.candidates.map(c => c.candidate);
     const votes = data.candidates.map(c => c.votes);
-
     const validVotes = data.valid_votes ?? votes.reduce((a, b) => a + b, 0);
 
     if (barChart) barChart.destroy();
@@ -162,17 +166,14 @@ function renderCharts(data) {
     if (topChart) topChart.destroy();
 
     /* ===== BAR CHART ===== */
-    barChart = new Chart(barChart?.ctx || document.getElementById("barChart"), {
+    const barCtx = document.getElementById("barChart").getContext("2d");
+    barChart = new Chart(barCtx, {
         type: "bar",
         data: {
             labels: names,
             datasets: [{
                 data: votes,
-                backgroundColor: gradient(
-                    document.getElementById("barChart").getContext("2d"),
-                    "#60a5fa",
-                    "#1d4ed8"
-                ),
+                backgroundColor: gradient(barCtx, "#60a5fa", "#1d4ed8"),
                 borderRadius: 12
             }]
         },
@@ -182,7 +183,7 @@ function renderCharts(data) {
         }
     });
 
-    /* ===== PIE CHART (LEGEND CLICK ENABLED) ===== */
+    /* ===== PIE CHART ===== */
     pieChart = new Chart(document.getElementById("pieChart"), {
         type: "pie",
         data: {
@@ -196,17 +197,15 @@ function renderCharts(data) {
             plugins: {
                 legend: {
                     onClick: (e, item, legend) => {
-                        const index = item.index;
-                        const value = legend.chart.data.datasets[0].data[index];
+                        const value = legend.chart.data.datasets[0].data[item.index];
                         showAnimatedValue(legend.chart, item.text, value);
                     }
                 }
-            },
-            animation: { duration: 1200 }
+            }
         }
     });
 
-    /* ===== DOUGHNUT CHART (LEGEND CLICK ENABLED) ===== */
+    /* ===== DOUGHNUT CHART ===== */
     donutChart = new Chart(document.getElementById("donutChart"), {
         type: "doughnut",
         data: {
@@ -221,35 +220,29 @@ function renderCharts(data) {
             plugins: {
                 legend: {
                     onClick: (e, item, legend) => {
-                        const index = item.index;
-                        const value = legend.chart.data.datasets[0].data[index];
+                        const value = legend.chart.data.datasets[0].data[item.index];
                         showAnimatedValue(legend.chart, item.text, value);
                     }
                 }
-            },
-            animation: { duration: 1400 }
+            }
         }
     });
 
-    /* ===== TOP 3 ===== */
-    topChart = new Chart(document.getElementById("topChart"), {
+    /* ===== TOP 3 BAR ===== */
+    const topCtx = document.getElementById("topChart").getContext("2d");
+    topChart = new Chart(topCtx, {
         type: "bar",
         data: {
             labels: names.slice(0, 3),
             datasets: [{
                 data: votes.slice(0, 3),
-                backgroundColor: gradient(
-                    document.getElementById("topChart").getContext("2d"),
-                    "#93c5fd",
-                    "#1e40af"
-                ),
+                backgroundColor: gradient(topCtx, "#93c5fd", "#1e40af"),
                 borderRadius: 10
             }]
         },
         options: {
             indexAxis: "y",
-            plugins: { legend: { display: false } },
-            animation: { duration: 1400 }
+            plugins: { legend: { display: false } }
         }
     });
 }
