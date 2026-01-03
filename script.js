@@ -94,14 +94,17 @@ function searchGP() {
             panel.classList.remove("hidden", "brs", "congress");
 
             if (data.gp.toLowerCase() === "durgaram") {
-                logo.src = "brs.png";
-                text.innerHTML = "BRS Supported Candidate<br>🏆 WON";
-                panel.classList.add("brs");
-            } else {
-                logo.src = "congress.png";
-                text.innerHTML = "Congress Supported Candidate<br>🏆 WON";
-                panel.classList.add("congress");
-            }
+            logo.src = "./brs.png";          // ✅ FIX
+            logo.alt = "BRS Logo";
+            text.innerHTML = "BRS Supported Candidate<br>🏆 WON";
+            panel.classList.add("brs");
+        } else {
+            logo.src = "./congress.png";     // ✅ FIX
+            logo.alt = "Congress Logo";
+            text.innerHTML = "Congress Supported Candidate<br>🏆 WON";
+            panel.classList.add("congress");
+        }
+
 
             renderCandidateList(data);
             renderCharts(data);
