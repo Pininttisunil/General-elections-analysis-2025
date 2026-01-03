@@ -5,6 +5,10 @@ from analysis import analyze_gp, get_unique_gram_panchayats
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/")
+def home():
+    return jsonify({"status": "Backend is running"})
+
 @app.route("/search", methods=["GET"])
 def search_gp():
     gp = request.args.get("gp")
@@ -16,5 +20,6 @@ def search_gp():
 def gplist():
     return jsonify(get_unique_gram_panchayats())
 
-# ❌ DO NOT add app.run() on Render
-# ❌ DO NOT redefine app again
+# IMPORTANT: Render does NOT use this, but localhost does
+if __name__ == "__main__":
+    app.run(debug=True)
